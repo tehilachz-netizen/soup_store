@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>סבוני גוף טבעיים - עבודת יד</title>
+    <title>סבוני גוף טבעיים עבודת יד</title>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Secular+One&display=swap" rel="stylesheet">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
@@ -222,20 +222,13 @@
 <body>
 
     <header>
-        <h1>סבוני גוף טבעיים - עבודת יד</h1>
-        <p>סבונים איכותיים משמנים צמחיים, חמאות עשירות ושמנים אתריים. למי שרוצה להתפנק או לפנק.</p>
+        <h1>סבוני גוף טבעיים עבודת יד</h1>
+        <p>סבונים איכותיים משמנים צמחיים, חמאות עשירות ושמנים אתריים.
+            למי שרוצה להתפנק או לפנק.</p>
         <div class="pricing-badge">
             🏷️ מחירי השקה: יחידה ב-18 ₪ | זוג ב-32 ₪
         </div>
     </header>
-
-    <div class="container">
-        <div class="filter-container">
-            <button class="filter-btn active" onclick="filterSoaps('all')">הכל</button>
-            <button class="filter-btn" onclick="filterSoaps('sensitive')">לעור רגיש ועדין</button>
-            <button class="filter-btn" onclick="filterSoaps('dry')">לעור יבש, עייף או סדוק</button>
-            <button class="filter-btn" onclick="filterSoaps('all-skin')">לטיפוח יומי ואיזון</button>
-        </div>
 
         <div class="products-grid" id="products-grid">
             <!-- נטען דינמית -->
@@ -265,10 +258,10 @@
                                 <h2 class="product-title">${soap.title}</h2>
                                 <div class="product-tagline">${soap.tagline}</div>
                                 
-                                <div class="section-title">הרכב ושילוב הרכיבים</div>
+                                <div class="section-title">רכיבים</div>
                                 <div class="ingredients-list">${soap.ingredients}</div>
 
-                                <div class="section-title">סגולות ותכונות מורחבות</div>
+                                <div class="section-title">סגולות ותכונות</div>
                                 <ul class="benefits-list">${benefitsHtml}</ul>
 
                                 <div class="suitable-for">
