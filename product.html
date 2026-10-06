@@ -20,16 +20,22 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Rubik', system-ui, -apple-system, sans-serif; /* גופן כללי לכל הטקסט בעמוד */
+      font-family: 'Rubik', system-ui, -apple-system, sans-serif;
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      padding: 20px;
+      padding: 20px 20px 0 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* הגדרת גופן פרנק רול לכותרות */
     h1, h2, h3, h4, .section-title {
       font-family: 'Frank Ruhl Libre', serif;
+    }
+
+    main {
+      flex: 1;
     }
 
     .container {
@@ -85,17 +91,47 @@
       transition: background 0.2s;
     }
     .whatsapp-btn:hover { background-color: #1eb857; }
+
+    /* עיצוב הפוטר בתחתית */
+    footer {
+      background-color: #eef2e8;
+      border-top: 1px solid #dbe3d3;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+      margin-left: -20px;
+      margin-right: -20px;
+      color: var(--text);
+    }
+    footer p {
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <a href="/" class="back-link">→ חזרה לקטלוג הסבונים</a>
+  <main>
+    <div class="container">
+      <a href="/" class="back-link">→ חזרה לקטלוג הסבונים</a>
 
-    <div class="product-wrapper" id="product-content">
-      <p>טוען נתוני סבון...</p>
+      <div class="product-wrapper" id="product-content">
+        <p>טוען נתוני סבון...</p>
+      </div>
     </div>
-  </div>
+  </main>
+
+  <footer>
+    <p>להזמנות: תהילה <a href="tel:0584020823">058-4020823</a> | יובל <a href="tel:0509606144">050-9606144</a></p>
+  </footer>
 
   <script>
     function formatImagePath(imgPath) {
