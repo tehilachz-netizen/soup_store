@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>סבונים טבעיים | קטלוג מוצרים</title>
+
+  <!-- טעינת גופני Google Fonts: Frank Ruhl Libre + Rubik -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;800&family=Rubik:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --primary: #5c6f52;
@@ -13,13 +19,20 @@
       --accent: #8b9d77;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Rubik', system-ui, -apple-system, sans-serif; /* גופן כללי לכל האתר */
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
       padding: 20px;
     }
+
+    /* הגדרת גופן פרנק רול לכותרות */
+    h1, h2, h3, h4, .product-title {
+      font-family: 'Frank Ruhl Libre', serif;
+    }
+
     header {
       text-align: center;
       padding: 40px 20px;
@@ -27,7 +40,7 @@
       margin: 0 auto 30px auto;
     }
     header h1 {
-      font-size: 2.5rem;
+      font-size: 2.7rem;
       color: var(--primary);
       margin-bottom: 10px;
     }
@@ -70,7 +83,7 @@
       flex-grow: 1;
     }
     .product-title {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       color: var(--primary);
       margin-bottom: 8px;
     }
