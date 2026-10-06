@@ -42,6 +42,7 @@ collections:
           - { label: "כותרת ראשית", name: "site_title", widget: "string" }
           - { label: "כותרת משנה", name: "site_subtitle", widget: "text" }
           - { label: "להציג באנר מבצע/השקה בראש האתר?", name: "show_launch_banner", widget: "boolean", default: true, required: false }
-          - { label: "מחיר רגיל מחוק (לדוגמה: ₪20)", name: "original_price", widget: "string", required: false }
-          - { label: "מחיר השקה / מבצע (לדוגמה: ₪18)", name: "launch_price", widget: "string", required: false }
-          - { label: "טקסט מבצע לזוג (אופציונלי, לדוגמה: | זוג ₪35)", name: "pair_price", widget: "string", required: false }
+          - { label: "מחיר השקה ליחידה (לדוגמה: ₪18)", name: "unit_sale_price", widget: "string", required: false }
+          - { label: "מחיר רגיל ליחידה מחוק בקו (לדוגמה: ₪20)", name: "unit_original_price", widget: "string", required: false }
+          - { label: "מחיר השקה לזוג (לדוגמה: ₪32)", name: "pair_sale_price", widget: "string", required: false }
+          - { label: "מחיר רגיל לזוג מחוק בקו (לדוגמה: ₪35)", name: "pair_original_price", widget: "string", required: false }
