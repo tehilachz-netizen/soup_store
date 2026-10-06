@@ -243,22 +243,31 @@
         
         const promoContainer = document.getElementById('site-promo');
 
+        // בודק אם הבאנר מופעל במערכת הניהול
         if (settings && settings.show_launch_banner !== false) {
           const parts = [];
 
-          // יחידה - מחיר מבצע
-          if (settings.unit_sale_price) {
-            let unitHtml = `<span class="sale-highlight">מחיר השקה: ליחידה ${settings.unit_sale_price}</span>`;
-            if (settings.unit_original_price) {
+          // בדיקה אם יש מחיר השקה/מבצע
+          const hasSale = !!(settings.unit_sale_price || settings.pair_sale_price);
+          const prefix = hasSale ? 'מחיר השקה:' : 'מחיר:';
+
+          // טיפול במחיר ליחידה (בין אם רגיל ובין אם מבצע)
+          const unitPrice = settings.unit_sale_price || settings.unit_original_price;
+          if (unitPrice) {
+            let unitHtml = `<span class="sale-highlight">ליחידה ${unitPrice}</span>`;
+            // אם יש גם מחיר מבצע וגם מחיר רגיל, נוסיף קו מחוק על המחיר הרגיל
+            if (settings.unit_sale_price && settings.unit_original_price) {
               unitHtml += ` <span class="strikethrough-price">${settings.unit_original_price}</span>`;
             }
             parts.push(`<span class="price-group">${unitHtml}</span>`);
           }
 
-          // זוג - מחיר מבצע
-          if (settings.pair_sale_price) {
-            let pairHtml = `<span class="sale-highlight">זוג ${settings.pair_sale_price}</span>`;
-            if (settings.pair_original_price) {
+          // טיפול במחיר לזוג (בין אם רגיל ובין אם מבצע)
+          const pairPrice = settings.pair_sale_price || settings.pair_original_price;
+          if (pairPrice) {
+            let pairHtml = `<span class="sale-highlight">זוג ${pairPrice}</span>`;
+            // אם יש גם מחיר מבצע וגם מחיר רגיל לזוג, נוסיף קו מחוק
+            if (settings.pair_sale_price && settings.pair_original_price) {
               pairHtml += ` <span class="strikethrough-price">${settings.pair_original_price}</span>`;
             }
             parts.push(`<span class="price-group">${pairHtml}</span>`);
@@ -266,7 +275,7 @@
 
           if (parts.length > 0) {
             promoContainer.style.display = 'inline-flex';
-            promoContainer.innerHTML = parts.join('<span class="separator">|</span>');
+            promoContainer.innerHTML = `<span>${prefix}</span> ` + parts.join('<span class="separator">|</span>');
           } else {
             promoContainer.style.display = 'none';
           }
