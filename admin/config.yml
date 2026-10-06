@@ -24,9 +24,9 @@ collections:
               - { label: "שם הסבון", name: "title", widget: "string" }
               - { label: "תיאור קצר (סלוגן)", name: "tagline", widget: "string" }
               - { label: "תמונה", name: "image", widget: "image" }
-              - { label: "למי מתאים?", name: "suitable_for", widget: "string", required: false }
+              - { label: "למי מתאים?", name: "suitable_for", widget: "text", required: false }
               - { label: "רכיבים", name: "ingredients", widget: "text" }
-              - { label: "סגולות ותכונות", name: "benefits", widget: "list", required: false }
+              - { label: "סגולות ותכונות", name: "benefits", widget: "list", field: { label: "תכונה / סגולה", name: "benefit", widget: "text" }, required: false }
               - { label: "קישור להזמנה בווטסאפ", name: "whatsapp_link", widget: "string", required: false }
 
   - name: "settings_collection"
@@ -37,5 +37,5 @@ collections:
         file: "content/settings.json"
         fields:
           - { label: "כותרת ראשית", name: "site_title", widget: "string" }
-          - { label: "כותרת משנה", name: "site_subtitle", widget: "string" }
+          - { label: "כותרת משנה", name: "site_subtitle", widget: "text" }
           - { label: "מחיר השקה / מבצע", name: "launch_price", widget: "string", required: false }
