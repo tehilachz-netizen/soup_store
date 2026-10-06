@@ -100,22 +100,32 @@
 
   <header>
     <h1 id="site-title">סבוני גוף טבעיים</h1>
-    <p id="site-subtitle">טוען כותרת...</p>
+    <p id="site-subtitle">טוען...</p>
   </header>
 
   <main class="catalog-grid" id="catalog-container">
-    <!-- הסבונים ייטענו לכאן באופן דינמי -->
+    <p style="text-align: center; grid-column: 1 / -1;">טוען מוצרים...</p>
   </main>
 
   <script>
-    // טעינת כותרות האתר
+    // טעינת כותרות האתר בבטחה
     fetch('/content/settings.json')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Settings file not found');
+        return res.json();
+      })
       .then(settings => {
         if (settings.site_title) document.getElementById('site-title').innerText = settings.site_title;
-        if (settings.site_subtitle) document.getElementById('site-subtitle').innerText = settings.site_subtitle;
+        if (settings.site_subtitle) {
+          document.getElementById('site-subtitle').innerText = settings.site_subtitle;
+        } else {
+          document.getElementById('site-subtitle').innerText = 'סבונים טבעיים בעבודת יד מרכיבים איכותיים';
+        }
       })
-      .catch(err => console.log('Settings load error:', err));
+      .catch(err => {
+        console.log('Using default subtitle');
+        document.getElementById('site-subtitle').innerText = 'סבונים טבעיים בעבודת יד מרכיבים איכותיים';
+      });
 
     // טעינת קטלוג הסבונים
     fetch('/soaps.json')
@@ -144,6 +154,7 @@
       })
       .catch(err => {
         console.error('Error loading soaps:', err);
+        document.getElementById('catalog-container').innerHTML = '<p style="text-align: center; grid-column: 1/-1;">שגיאה בטעינת המוצרים.</p>';
       });
   </script>
 </body>
