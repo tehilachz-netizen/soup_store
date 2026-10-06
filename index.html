@@ -62,7 +62,7 @@
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
       margin-top: 12px;
       padding: 8px 24px;
       background-color: var(--banner-bg);
@@ -89,7 +89,7 @@
       color: #8c7161;
       font-weight: 500;
       font-size: 1.05rem;
-      margin-left: 4px;
+      margin: 0 2px;
     }
 
     .sale-highlight {
@@ -244,38 +244,32 @@
         const promoContainer = document.getElementById('site-promo');
 
         if (settings && settings.show_launch_banner !== false) {
-          promoContainer.style.display = 'inline-flex';
+          const parts = [];
 
-          let html = `<span>מחיר השקה:</span>`;
-
-          // חלק 1: ליחידה (מחיר מבצע + מחיר מבוטל אם קיים)
-          const unitSale = settings.unit_sale_price || '₪18';
-          const unitOrig = settings.unit_original_price || '';
-          
-          html += `
-            <span class="price-group">
-              <span>ליחידה</span>
-              <span class="sale-highlight">${unitSale}</span>
-              ${unitOrig ? `<span class="strikethrough-price">${unitOrig}</span>` : ''}
-            </span>
-          `;
-
-          // חלק 2: לזוג (מחיר מבצע + מחיר מבוטל אם קיים)
-          const pairSale = settings.pair_sale_price || '';
-          const pairOrig = settings.pair_original_price || '';
-
-          if (pairSale || pairOrig) {
-            html += `<span class="separator">|</span>`;
-            html += `
-              <span class="price-group">
-                <span>זוג</span>
-                ${pairSale ? `<span class="sale-highlight">${pairSale}</span>` : ''}
-                ${pairOrig ? `<span class="strikethrough-price">${pairOrig}</span>` : ''}
-              </span>
-            `;
+          // יחידה - מחיר מבצע
+          if (settings.unit_sale_price) {
+            let unitHtml = `<span class="sale-highlight">מחיר השקה: ליחידה ${settings.unit_sale_price}</span>`;
+            if (settings.unit_original_price) {
+              unitHtml += ` <span class="strikethrough-price">${settings.unit_original_price}</span>`;
+            }
+            parts.push(`<span class="price-group">${unitHtml}</span>`);
           }
 
-          promoContainer.innerHTML = html;
+          // זוג - מחיר מבצע
+          if (settings.pair_sale_price) {
+            let pairHtml = `<span class="sale-highlight">זוג ${settings.pair_sale_price}</span>`;
+            if (settings.pair_original_price) {
+              pairHtml += ` <span class="strikethrough-price">${settings.pair_original_price}</span>`;
+            }
+            parts.push(`<span class="price-group">${pairHtml}</span>`);
+          }
+
+          if (parts.length > 0) {
+            promoContainer.style.display = 'inline-flex';
+            promoContainer.innerHTML = parts.join('<span class="separator">|</span>');
+          } else {
+            promoContainer.style.display = 'none';
+          }
         } else {
           promoContainer.style.display = 'none';
         }
