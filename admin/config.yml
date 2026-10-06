@@ -2,7 +2,7 @@ backend:
   name: github
   repo: tehilachz-netizen/soup_store
   branch: main
-  base_url: https://decap-cms-oauth-provider.vercel.app
+  auth_type: implicit
 
 media_folder: "images"
 public_folder: "/images"
