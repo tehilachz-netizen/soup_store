@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">פרטי סבון</title>
+  <style>
+    :root {
+      --primary: #5c6f52;
+      --bg: #f9f7f2;
+      --text: #2c3529;
+      --card-bg: #ffffff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .back-link {
+      display: inline-block;
+      margin: 20px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .product-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 20px 30px 40px 30px;
+    }
+    .product-media {
+      flex: 1 1 350px;
+    }
+    .product-media img {
+      width: 100%;
+      border-radius: 8px;
+      object-fit: cover;
+      max-height: 450px;
+    }
+    .product-details {
+      flex: 1 1 400px;
+    }
+    h1 { font-size: 2rem; color: var(--primary); margin-bottom: 5px; }
+    .subtitle { font-size: 1.1rem; color: #666; margin-bottom: 15px; }
+    .price { font-size: 1.5rem; font-weight: bold; color: var(--primary); margin-bottom: 20px; }
+    .section-title { font-weight: bold; font-size: 1.1rem; margin-top: 20px; margin-bottom: 8px; border-bottom: 2px solid var(--bg); padding-bottom: 4px; }
+    ul { list-style-type: square; padding-right: 20px; }
+    li { margin-bottom: 5px; }
+    .whatsapp-btn {
+      display: inline-block;
+      margin-top: 25px;
+      background-color: #25D366;
+      color: white;
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+      transition: background 0.2s;
+    }
+    .whatsapp-btn:hover { background-color: #1eb857; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="/" class="back-link">→ חזרה לקטלוג הסבונים</a>
+
+    <div class="product-wrapper" id="product-content">
+      <p>טוען נתוני סבון...</p>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const soapId = urlParams.get('id');
+
+    fetch('/soaps.json')
+      .then(res => res.json())
+      .then(soaps => {
+        // מציאת הסבון לפי ה-ID או לפי אינדקס
+        const soap = soaps.find((item, idx) => item.id === soapId || `soap-${idx + 1}` === soapId) || soaps[0];
+
+        if (!soap) {
+          document.getElementById('product-content').innerHTML = '<p>סבון לא נמצא.</p>';
+          return;
+        }
+
+        document.getElementById('page-title').innerText = `${soap.name} | סבון טבעי`;
+
+        let featuresHtml = '';
+        if (soap.features && soap.features.length) {
+          featuresHtml = `
+            <div class="section-title">סגולות ותכונות:</div>
+            <ul>
+              ${soap.features.map(f => `<li>${typeof f === 'object' ? (f.feature || Object.values(f)[0]) : f}</li>`).join('')}
+            </ul>
+          `;
+        }
+
+        document.getElementById('product-content').innerHTML = `
+          <div class="product-media">
+            <img src="${soap.image || '/images/default.jpg'}" alt="${soap.name}">
+          </div>
+          <div class="product-details">
+            <h1>${soap.name}</h1>
+            <div class="subtitle">${soap.subtitle || ''}</div>
+            ${soap.price ? `<div class="price">₪${soap.price}</div>` : ''}
+
+            ${soap.ingredients ? `
+              <div class="section-title">רכיבים:</div>
+              <p>${soap.ingredients}</p>
+            ` : ''}
+
+            ${featuresHtml}
+
+            ${soap.whatsapp_link ? `
+              <a href="${soap.whatsapp_link}" target="_blank" class="whatsapp-btn">להזמנה בווטסאפ</a>
+            ` : ''}
+          </div>
+        `;
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('product-content').innerHTML = '<p>שגיאה בטעינת הפרטים.</p>';
+      });
+  </script>
+</body>
+</html>
