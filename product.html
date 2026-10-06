@@ -85,6 +85,17 @@
   </div>
 
   <script>
+    function formatImagePath(imgPath) {
+      if (!imgPath) return '/images/default.jpg';
+      if (imgPath.startsWith('http://') || imgPath.startsWith('https://')) return imgPath;
+      
+      let cleanPath = imgPath.startsWith('/') ? imgPath.slice(1) : imgPath;
+      if (!cleanPath.startsWith('images/')) {
+        cleanPath = 'images/' + cleanPath;
+      }
+      return '/' + cleanPath.split('/').map(segment => encodeURIComponent(segment)).join('/');
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const soapId = urlParams.get('id');
 
@@ -102,7 +113,7 @@
 
         const title = soap.title || soap.name;
         const tagline = soap.tagline || soap.subtitle || '';
-        const image = soap.image ? (soap.image.startsWith('/') || soap.image.startsWith('http') ? soap.image : `/images/${soap.image}`) : '/images/default.jpg';
+        const image = formatImagePath(soap.image);
         const benefits = soap.benefits || soap.features || [];
 
         document.getElementById('page-title').innerText = `${title} | סבון טבעי`;
@@ -119,7 +130,7 @@
 
         document.getElementById('product-content').innerHTML = `
           <div class="product-media">
-            <img src="${image}" alt="${title}">
+            <img src="${image}" alt="${title}" onerror="this.src='/images/default.jpg'">
           </div>
           <div class="product-details">
             <h1>${title}</h1>
