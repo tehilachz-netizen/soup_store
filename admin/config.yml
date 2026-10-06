@@ -6,22 +6,30 @@ media_folder: "images"
 public_folder: "/images"
 
 collections:
+  - name: "site_settings"
+    label: "הגדרות האתר"
+    files:
+      - file: "content/settings.json"
+        label: "כותרות האתר"
+        name: "settings"
+        fields:
+          - { label: "כותרת ראשית", name: "site_title", widget: "string" }
+          - { label: "כותרת משנית", name: "site_subtitle", widget: "string" }
+
   - name: "soaps"
     label: "סבונים"
-    files:
-      - file: "soaps.json"
-        label: "רשימת הסבונים"
-        name: "soaps_list"
-        fields:
-          - label: "סבונים"
-            name: "soaps"
-            widget: "list"
-            fields:
-              - { label: "מזהה/קטיגוריה", name: "category", widget: "string" }
-              - { label: "שם הסבון", name: "title", widget: "string" }
-              - { label: "תת-כותרת", name: "tagline", widget: "string" }
-              - { label: "תמונה", name: "image", widget: "image" }
-              - { label: "הרכב ורכיבים", name: "ingredients", widget: "text" }
-              - { label: "סגולות ותכונות (שורות נפרדות)", name: "benefits", widget: "list" }
-              - { label: "למי מתאים", name: "suitable_for", widget: "text" }
-              - { label: "קישור להזמנה בווטסאפ", name: "whatsapp_link", widget: "string" }
+    file: "soaps.json"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "מזהה (ID יחודי באנגלית, למשל: soap-1)", name: "id", widget: "string" }
+      - { label: "שם הסבון", name: "name", widget: "string" }
+      - { label: "תת-כותרת", name: "subtitle", widget: "string" }
+      - { label: "מחיר (בש״ח)", name: "price", widget: "string", default: "35" }
+      - { label: "תמונה", name: "image", widget: "image" }
+      - { label: "רכיבים", name: "ingredients", widget: "text" }
+      - label: "סגולות ותכונות"
+        name: "features"
+        widget: "list"
+        field: { label: "תכונה", name: "feature", widget: "string" }
+      - { label: "קישור להזמנה בווטסאפ", name: "whatsapp_link", widget: "string" }
