@@ -123,6 +123,18 @@
         document.getElementById('site-subtitle').innerText = 'סבונים טבעיים בעבודת יד מרכיבים איכותיים';
       });
 
+    // פונקציית עזר לטיפול בנתיבי תמונות עם עברית ורווחים
+    function formatImagePath(imgPath) {
+      if (!imgPath) return '/images/default.jpg';
+      if (imgPath.startsWith('http://') || imgPath.startsWith('https://')) return imgPath;
+      
+      let cleanPath = imgPath.startsWith('/') ? imgPath.slice(1) : imgPath;
+      if (!cleanPath.startsWith('images/')) {
+        cleanPath = 'images/' + cleanPath;
+      }
+      return '/' + cleanPath.split('/').map(segment => encodeURIComponent(segment)).join('/');
+    }
+
     // טעינת קטלוג הסבונים
     fetch('/soaps.json')
       .then(res => {
@@ -144,7 +156,7 @@
           const soapId = soap.id || `soap-${index + 1}`;
           const soapTitle = soap.title || soap.name || 'סבון טבעי';
           const soapTagline = soap.tagline || soap.subtitle || '';
-          const soapImage = soap.image ? (soap.image.startsWith('/') || soap.image.startsWith('http') ? soap.image : `/images/${soap.image}`) : '/images/default.jpg';
+          const soapImage = formatImagePath(soap.image);
           const soapPrice = soap.price ? `₪${soap.price}` : '';
 
           const card = document.createElement('a');
@@ -152,7 +164,7 @@
           card.href = `/product.html?id=${encodeURIComponent(soapId)}`;
 
           card.innerHTML = `
-            <img class="product-image" src="${soapImage}" alt="${soapTitle}">
+            <img class="product-image" src="${soapImage}" alt="${soapTitle}" onerror="this.src='/images/default.jpg'">
             <div class="product-info">
               <h2 class="product-title">${soapTitle}</h2>
               <p class="product-subtitle">${soapTagline}</p>
