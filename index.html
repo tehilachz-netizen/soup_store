@@ -56,17 +56,38 @@
       margin-bottom: 6px;
     }
 
-    /* עיצוב תת-כותרת מחיר השקה */
+    /* עיצוב באנר מחירים ומבצעים */
     .promo-banner {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 6px 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 8px 22px;
       background-color: var(--banner-bg);
       color: var(--primary-hover);
       font-weight: 600;
-      font-size: 1.1rem;
-      border-radius: 20px;
+      font-size: 1.15rem;
+      border-radius: 25px;
       border: 1px solid var(--accent);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    /* עיצוב המחיר המקורי שנמחק בקו */
+    .strikethrough-price {
+      text-decoration: line-through;
+      color: #8c7161;
+      font-weight: 400;
+      font-size: 1.05rem;
+      margin-right: 2px;
+      margin-left: 6px;
+      opacity: 0.85;
+    }
+
+    .sale-highlight {
+      font-weight: 700;
+      color: var(--primary-hover);
     }
 
     main {
@@ -134,6 +155,10 @@
       font-size: 1.2rem;
       color: var(--primary-hover);
       margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
     .view-btn {
       background-color: var(--primary);
@@ -178,7 +203,13 @@
   <header>
     <h1 id="site-title">סבוני גוף טבעיים</h1>
     <p id="site-subtitle">טוען...</p>
-    <div class="promo-banner" id="site-promo">מחיר השקה: ליחידה ₪20 | זוג ₪35</div>
+    
+    <div class="promo-banner" id="site-promo" style="display: none;">
+      <span>מחיר השקה: יחידה</span>
+      <span class="sale-highlight" id="launch-price-val">₪18</span>
+      <span class="strikethrough-price" id="orig-price-val" style="display: none;">₪20</span>
+      <span id="pair-price-val">| זוג ₪35</span>
+    </div>
   </header>
 
   <main>
@@ -202,8 +233,27 @@
           document.getElementById('site-subtitle').innerText = 'סבונים איכותיים משמנים טבעיים עם שמנים אתריים שונים, למי שרוצה להתפנק או לפנק';
         }
         
-        if (settings && (settings.launch_price || settings.promo_text)) {
-          document.getElementById('site-promo').innerText = settings.launch_price || settings.promo_text;
+        const promoContainer = document.getElementById('site-promo');
+
+        // בדיקה אם המשתמש בחר להציג את באנר ההשקה
+        if (settings && settings.show_launch_banner !== false) {
+          promoContainer.style.display = 'inline-flex';
+
+          if (settings.launch_price) {
+            document.getElementById('launch-price-val').innerText = settings.launch_price;
+          }
+
+          if (settings.original_price) {
+            const origEl = document.getElementById('orig-price-val');
+            origEl.innerText = settings.original_price;
+            origEl.style.display = 'inline';
+          }
+
+          if (settings.pair_price !== undefined) {
+            document.getElementById('pair-price-val').innerText = settings.pair_price;
+          }
+        } else {
+          promoContainer.style.display = 'none';
         }
       })
       .catch(() => {
@@ -242,7 +292,19 @@
           const soapTitle = soap.title || soap.name || 'סבון טבעי';
           const soapTagline = soap.tagline || soap.subtitle || '';
           const soapImage = formatImagePath(soap.image);
-          const soapPrice = soap.price ? `₪${soap.price}` : '';
+
+          // יצירת תצוגת מחיר מותאמת לפי הגדרות המבצע של המוצר
+          let priceHtml = '';
+          if (soap.show_sale && soap.sale_price) {
+            priceHtml = `
+              <div class="product-price">
+                <span class="sale-highlight">₪${soap.sale_price}</span>
+                ${soap.price ? `<span class="strikethrough-price">₪${soap.price}</span>` : ''}
+              </div>
+            `;
+          } else if (soap.price) {
+            priceHtml = `<div class="product-price">₪${soap.price}</div>`;
+          }
 
           const card = document.createElement('a');
           card.className = 'product-card';
@@ -253,7 +315,7 @@
             <div class="product-info">
               <h2 class="product-title">${soapTitle}</h2>
               <p class="product-subtitle">${soapTagline}</p>
-              ${soapPrice ? `<div class="product-price">${soapPrice}</div>` : ''}
+              ${priceHtml}
               <div class="view-btn">לפרטים מלאים והזמנה</div>
             </div>
           `;
