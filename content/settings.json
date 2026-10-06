@@ -1,8 +1,9 @@
 {
   "site_title": "סבוני גוף טבעיים",
   "site_subtitle": "סבונים איכותיים משמנים טבעיים עם שמנים אתריים שונים, למי שרוצה להתפנק או לפנק",
-  "launch_price": "מחיר השקה: ליחידה ₪18 | זוג ₪32",
   "show_launch_banner": true,
-  "original_price": "₪20",
-  "pair_price": "₪35"
+  "unit_sale_price": "₪18",
+  "unit_original_price": "₪20",
+  "pair_sale_price": "₪32",
+  "pair_original_price": "₪35"
 }
