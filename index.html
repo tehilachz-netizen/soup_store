@@ -110,42 +110,53 @@
   <script>
     // טעינת כותרות האתר בבטחה
     fetch('/content/settings.json')
-      .then(res => {
-        if (!res.ok) throw new Error('Settings file not found');
-        return res.json();
-      })
+      .then(res => res.ok ? res.json() : null)
       .then(settings => {
-        if (settings.site_title) document.getElementById('site-title').innerText = settings.site_title;
-        if (settings.site_subtitle) {
+        if (settings && settings.site_title) document.getElementById('site-title').innerText = settings.site_title;
+        if (settings && settings.site_subtitle) {
           document.getElementById('site-subtitle').innerText = settings.site_subtitle;
         } else {
           document.getElementById('site-subtitle').innerText = 'סבונים טבעיים בעבודת יד מרכיבים איכותיים';
         }
       })
-      .catch(err => {
-        console.log('Using default subtitle');
+      .catch(() => {
         document.getElementById('site-subtitle').innerText = 'סבונים טבעיים בעבודת יד מרכיבים איכותיים';
       });
 
     // טעינת קטלוג הסבונים
     fetch('/soaps.json')
-      .then(res => res.json())
-      .then(soaps => {
+      .then(res => {
+        if (!res.ok) throw new Error('soaps.json not found');
+        return res.json();
+      })
+      .then(data => {
         const container = document.getElementById('catalog-container');
         container.innerHTML = '';
 
+        const soaps = Array.isArray(data) ? data : (data.soaps || []);
+
+        if (soaps.length === 0) {
+          container.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">אין מוצרים להצגה כרגע.</p>';
+          return;
+        }
+
         soaps.forEach((soap, index) => {
           const soapId = soap.id || `soap-${index + 1}`;
+          const soapTitle = soap.title || soap.name || 'סבון טבעי';
+          const soapTagline = soap.tagline || soap.subtitle || '';
+          const soapImage = soap.image ? (soap.image.startsWith('/') || soap.image.startsWith('http') ? soap.image : `/images/${soap.image}`) : '/images/default.jpg';
+          const soapPrice = soap.price ? `₪${soap.price}` : '';
+
           const card = document.createElement('a');
           card.className = 'product-card';
           card.href = `/product.html?id=${encodeURIComponent(soapId)}`;
 
           card.innerHTML = `
-            <img class="product-image" src="${soap.image || '/images/default.jpg'}" alt="${soap.name}">
+            <img class="product-image" src="${soapImage}" alt="${soapTitle}">
             <div class="product-info">
-              <h2 class="product-title">${soap.name}</h2>
-              <p class="product-subtitle">${soap.subtitle || ''}</p>
-              ${soap.price ? `<div class="product-price">₪${soap.price}</div>` : ''}
+              <h2 class="product-title">${soapTitle}</h2>
+              <p class="product-subtitle">${soapTagline}</p>
+              ${soapPrice ? `<div class="product-price">${soapPrice}</div>` : ''}
               <div class="view-btn">לפרטים מלאים והזמנה</div>
             </div>
           `;
