@@ -24,6 +24,9 @@ collections:
               - { label: "שם הסבון", name: "title", widget: "string" }
               - { label: "תיאור קצר (סלוגן)", name: "tagline", widget: "string" }
               - { label: "תמונה", name: "image", widget: "image" }
+              - { label: "מחיר רגיל (לדוגמה: 20)", name: "price", widget: "string", required: false }
+              - { label: "להציג מחיר מבצע/השקה מיוחד למוצר זה?", name: "show_sale", widget: "boolean", default: false, required: false }
+              - { label: "מחיר מיוחד / מבצע (לדוגמה: 18)", name: "sale_price", widget: "string", required: false }
               - { label: "למי מתאים?", name: "suitable_for", widget: "text", required: false }
               - { label: "רכיבים", name: "ingredients", widget: "text" }
               - { label: "סגולות ותכונות", name: "benefits", widget: "list", field: { label: "תכונה / סגולה", name: "benefit", widget: "text" }, required: false }
@@ -38,5 +41,7 @@ collections:
         fields:
           - { label: "כותרת ראשית", name: "site_title", widget: "string" }
           - { label: "כותרת משנה", name: "site_subtitle", widget: "text" }
-          - { label: "מחיר רגיל (מחוק בקו)", name: "original_price", widget: "string", required: false }
-          - { label: "מחיר השקה / מבצע", name: "launch_price", widget: "string", required: false }
+          - { label: "להציג באנר מבצע/השקה בראש האתר?", name: "show_launch_banner", widget: "boolean", default: true, required: false }
+          - { label: "מחיר רגיל מחוק (לדוגמה: ₪20)", name: "original_price", widget: "string", required: false }
+          - { label: "מחיר השקה / מבצע (לדוגמה: ₪18)", name: "launch_price", widget: "string", required: false }
+          - { label: "טקסט מבצע לזוג (אופציונלי, לדוגמה: | זוג ₪35)", name: "pair_price", widget: "string", required: false }
