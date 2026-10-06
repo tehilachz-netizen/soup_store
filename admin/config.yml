@@ -2,22 +2,23 @@ backend:
   name: github
   repo: tehilachz-netizen/soup_store
   branch: main
+  site_domain: soupstore.vercel.app
+  base_url: https://decap-cms-oauth-provider-decap.vercel.app
 
 media_folder: "images"
 public_folder: "/images"
 
 collections:
   - name: "soaps_collection"
-    label: "סבונים"
+    label: "ניהול סבונים"
     files:
-      - label: "קטלוג סבונים"
-        name: "soaps_file"
+      - label: "רשימת הסבונים בקטלוג"
+        name: "soaps_list"
         file: "soaps.json"
         fields:
           - name: "soaps"
             label: "רשימת סבונים"
             widget: "list"
-            summary: "{{fields.title}}"
             fields:
               - { label: "מזהה ייחודי (באנגלית)", name: "id", widget: "string" }
               - { label: "שם הסבון", name: "title", widget: "string" }
@@ -25,7 +26,7 @@ collections:
               - { label: "תמונה", name: "image", widget: "image" }
               - { label: "למי מתאים?", name: "suitable_for", widget: "string", required: false }
               - { label: "רכיבים", name: "ingredients", widget: "text" }
-              - { label: "סגולות ותכונות", name: "benefits", widget: "list", field: { label: "תכונה", name: "feature", widget: "string" } }
+              - { label: "סגולות ותכונות", name: "benefits", widget: "list", required: false }
               - { label: "קישור להזמנה בווטסאפ", name: "whatsapp_link", widget: "string", required: false }
 
   - name: "settings_collection"
