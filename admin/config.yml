@@ -38,4 +38,5 @@ collections:
         fields:
           - { label: "כותרת ראשית", name: "site_title", widget: "string" }
           - { label: "כותרת משנה", name: "site_subtitle", widget: "text" }
+          - { label: "מחיר רגיל (מחוק בקו)", name: "original_price", widget: "string", required: false }
           - { label: "מחיר השקה / מבצע", name: "launch_price", widget: "string", required: false }
