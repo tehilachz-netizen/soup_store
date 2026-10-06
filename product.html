@@ -57,7 +57,7 @@
     .price { font-size: 1.5rem; font-weight: bold; color: var(--primary); margin-bottom: 20px; }
     .section-title { font-weight: bold; font-size: 1.1rem; margin-top: 20px; margin-bottom: 8px; border-bottom: 2px solid var(--bg); padding-bottom: 4px; }
     ul { list-style-type: square; padding-right: 20px; }
-    li { margin-bottom: 5px; }
+    li { margin-bottom: 8px; }
     .whatsapp-btn {
       display: inline-block;
       margin-top: 25px;
@@ -90,8 +90,9 @@
 
     fetch('/soaps.json')
       .then(res => res.json())
-      .then(soaps => {
-        // מציאת הסבון לפי ה-ID או לפי אינדקס
+      .then(data => {
+        const soaps = Array.isArray(data) ? data : (data.soaps || []);
+        
         const soap = soaps.find((item, idx) => item.id === soapId || `soap-${idx + 1}` === soapId) || soaps[0];
 
         if (!soap) {
@@ -99,33 +100,43 @@
           return;
         }
 
-        document.getElementById('page-title').innerText = `${soap.name} | סבון טבעי`;
+        const title = soap.title || soap.name;
+        const tagline = soap.tagline || soap.subtitle || '';
+        const image = soap.image ? (soap.image.startsWith('/') || soap.image.startsWith('http') ? soap.image : `/images/${soap.image}`) : '/images/default.jpg';
+        const benefits = soap.benefits || soap.features || [];
 
-        let featuresHtml = '';
-        if (soap.features && soap.features.length) {
-          featuresHtml = `
+        document.getElementById('page-title').innerText = `${title} | סבון טבעי`;
+
+        let benefitsHtml = '';
+        if (benefits.length) {
+          benefitsHtml = `
             <div class="section-title">סגולות ותכונות:</div>
             <ul>
-              ${soap.features.map(f => `<li>${typeof f === 'object' ? (f.feature || Object.values(f)[0]) : f}</li>`).join('')}
+              ${benefits.map(b => `<li>${typeof b === 'object' ? (b.feature || Object.values(b)[0]) : b}</li>`).join('')}
             </ul>
           `;
         }
 
         document.getElementById('product-content').innerHTML = `
           <div class="product-media">
-            <img src="${soap.image || '/images/default.jpg'}" alt="${soap.name}">
+            <img src="${image}" alt="${title}">
           </div>
           <div class="product-details">
-            <h1>${soap.name}</h1>
-            <div class="subtitle">${soap.subtitle || ''}</div>
+            <h1>${title}</h1>
+            <div class="subtitle">${tagline}</div>
             ${soap.price ? `<div class="price">₪${soap.price}</div>` : ''}
+
+            ${soap.suitable_for ? `
+              <div class="section-title">למי זה מתאים?</div>
+              <p>${soap.suitable_for}</p>
+            ` : ''}
 
             ${soap.ingredients ? `
               <div class="section-title">רכיבים:</div>
               <p>${soap.ingredients}</p>
             ` : ''}
 
-            ${featuresHtml}
+            ${benefitsHtml}
 
             ${soap.whatsapp_link ? `
               <a href="${soap.whatsapp_link}" target="_blank" class="whatsapp-btn">להזמנה בווטסאפ</a>
