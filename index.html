@@ -25,7 +25,10 @@
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      padding: 20px;
+      padding: 20px 20px 0 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     h1, h2, h3, h4, .product-title {
@@ -34,9 +37,9 @@
 
     header {
       text-align: center;
-      padding: 40px 20px;
+      padding: 40px 20px 20px 20px;
       max-width: 800px;
-      margin: 0 auto 30px auto;
+      margin: 0 auto;
     }
     header h1 {
       font-size: 2.7rem;
@@ -44,20 +47,39 @@
       margin-bottom: 10px;
     }
     header p {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: #666;
+      margin-bottom: 6px;
     }
+
+    /* עיצוב תת-כותרת מחיר השקה */
+    .promo-banner {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 18px;
+      background-color: #e8efe0;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 20px;
+      border: 1px solid var(--accent);
+    }
+
+    main {
+      flex: 1;
+    }
+
     .catalog-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 25px;
       max-width: 1100px;
-      margin: 0 auto;
+      margin: 30px auto 50px auto;
     }
     .product-card {
       background: var(--card-bg);
       border-radius: 12px;
-      overflow: hidden; /* שומר שהתמונה המוגדלת לא תגלוש מחוץ לפינות המעוגלות */
+      overflow: hidden;
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       text-decoration: none;
@@ -70,7 +92,6 @@
       box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     }
 
-    /* עיצוב התמונה ואפקט ההגדלה */
     .product-image {
       width: 100%;
       height: 240px;
@@ -79,12 +100,11 @@
       display: block;
       margin: 0 auto;
       background-color: #eee;
-      transition: transform 0.4s ease; /* מעבר חלק של 0.4 שניות להגדלה */
+      transition: transform 0.4s ease;
     }
 
-    /* הגדלה עדין של התמונה כשהעכבר נמצא על כרטיסיית המוצר */
     .product-card:hover .product-image {
-      transform: scale(1.06); /* הגדלה עדינות של 6% בלבד */
+      transform: scale(1.06);
     }
 
     .product-info {
@@ -121,7 +141,31 @@
       transition: background-color 0.2s;
     }
     .product-card:hover .view-btn {
-      background-color: #4a5a41; /* הכהיית הכפתור בלחיצה/מעבר עכבר */
+      background-color: #4a5a41;
+    }
+
+    /* עיצוב הפוטר בתחתית */
+    footer {
+      background-color: #eef2e8;
+      border-top: 1px solid #dbe3d3;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+      margin-left: -20px;
+      margin-right: -20px;
+      color: var(--text);
+    }
+    footer p {
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -130,11 +174,18 @@
   <header>
     <h1 id="site-title">סבוני גוף טבעיים</h1>
     <p id="site-subtitle">טוען...</p>
+    <div class="promo-banner" id="site-promo">מחיר השקה: ליחידה ₪20 | זוג ₪35</div>
   </header>
 
-  <main class="catalog-grid" id="catalog-container">
-    <p style="text-align: center; grid-column: 1 / -1;">טוען מוצרים...</p>
+  <main>
+    <div class="catalog-grid" id="catalog-container">
+      <p style="text-align: center; grid-column: 1 / -1;">טוען מוצרים...</p>
+    </div>
   </main>
+
+  <footer>
+    <p>להזמנות: תהילה <a href="tel:0584020823">058-4020823</a> | יובל <a href="tel:0509606144">050-9606144</a></p>
+  </footer>
 
   <script>
     fetch('/content/settings.json')
@@ -144,11 +195,16 @@
         if (settings && settings.site_subtitle) {
           document.getElementById('site-subtitle').innerText = settings.site_subtitle;
         } else {
-          document.getElementById('site-subtitle').innerText = 'סבונים טבעיים בעבודת יד מרכיבים איכותיים';
+          document.getElementById('site-subtitle').innerText = 'סבונים איכותיים משמנים טבעיים עם שמנים אתריים שונים, למי שרוצה להתפנק או לפנק';
+        }
+        
+        // שליפת מחיר/תגית השקה מהגדרות במידה וקיים שדה launch_price
+        if (settings && (settings.launch_price || settings.promo_text)) {
+          document.getElementById('site-promo').innerText = settings.launch_price || settings.promo_text;
         }
       })
       .catch(() => {
-        document.getElementById('site-subtitle').innerText = 'סבונים טבעיים בעבודת יד מרכיבים איכותיים';
+        document.getElementById('site-subtitle').innerText = 'סבונים איכותיים משמנים טבעיים עם שמנים אתריים שונים, למי שרוצה להתפנק או לפנק';
       });
 
     function formatImagePath(imgPath) {
