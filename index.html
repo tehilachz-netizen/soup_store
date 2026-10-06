@@ -1,303 +1,150 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>סבוני גוף טבעיים עבודת יד</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Secular+One&display=swap" rel="stylesheet">
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <style>
-        :root {
-            --bg-color: #fcf9f2;
-            --card-bg: #ffffff;
-            --primary-color: #7d6b56;
-            --accent-color: #d4a373;
-            --text-main: #333333;
-            --text-muted: #555555;
-            --border-color: #e6dfd5;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            --radius: 16px;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Rubik', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding-bottom: 60px;
-        }
-
-        header {
-            text-align: center;
-            padding: 50px 20px 30px;
-            background: linear-gradient(180deg, #f3ede2 0%, var(--bg-color) 100%);
-        }
-
-        header h1 {
-            font-family: 'Secular One', sans-serif;
-            font-size: 2.8rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 25px;
-        }
-
-        .pricing-badge {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-weight: 500;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(125, 107, 86, 0.2);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .filter-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            padding: 8px 18px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background-color: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        .product-card {
-            background-color: var(--card-bg);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover { transform: translateY(-5px); }
-
-        .product-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            background-color: #eee;
-        }
-
-        .product-content {
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .product-title {
-            font-size: 1.6rem;
-            color: var(--primary-color);
-            margin-bottom: 6px;
-        }
-
-        .product-tagline {
-            font-size: 0.95rem;
-            color: var(--accent-color);
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
-        .section-title {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--primary-color);
-            margin-top: 15px;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 1px solid #f0e8dd;
-            padding-bottom: 3px;
-        }
-
-        .ingredients-list {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-
-        .benefits-list {
-            list-style-type: none;
-            font-size: 0.93rem;
-            margin-bottom: 15px;
-        }
-
-        .benefits-list li {
-            position: relative;
-            padding-right: 22px;
-            margin-bottom: 8px;
-            color: var(--text-main);
-        }
-
-        .benefits-list li::before {
-            content: "🌿";
-            position: absolute;
-            right: 0;
-            font-size: 0.85rem;
-            top: 2px;
-        }
-
-        .suitable-for {
-            background-color: var(--bg-color);
-            padding: 12px 15px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            color: var(--primary-color);
-            line-height: 1.5;
-            margin-top: auto;
-            border-right: 3px solid var(--accent-color);
-        }
-
-        .order-btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background-color: #25D366;
-            color: white;
-            text-decoration: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: background-color 0.3s;
-        }
-
-        .order-btn:hover { background-color: #1eb854; }
-
-        footer {
-            margin-top: 60px;
-            text-align: center;
-            padding: 30px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: var(--radius) var(--radius) 0 0;
-        }
-
-        footer h2 { margin-bottom: 10px; }
-        footer p { font-size: 1.1rem; margin-bottom: 5px; }
-        footer a { color: #ffe8d6; text-decoration: none; font-weight: bold; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>סבונים טבעיים | קטלוג מוצרים</title>
+  <style>
+    :root {
+      --primary: #5c6f52;
+      --bg: #f9f7f2;
+      --text: #2c3529;
+      --card-bg: #ffffff;
+      --accent: #8b9d77;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #666;
+    }
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    .product-image {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      background-color: #eee;
+    }
+    .product-info {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .product-title {
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .product-subtitle {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 15px;
+      flex-grow: 1;
+    }
+    .product-price {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .view-btn {
+      background-color: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>סבוני גוף טבעיים עבודת יד</h1>
-        <p>סבונים איכותיים משמנים צמחיים, חמאות עשירות ושמנים אתריים.
-            למי שרוצה להתפנק או לפנק.</p>
-        <div class="pricing-badge">
-            🏷️ מחירי השקה: יחידה ב-18 ₪ | זוג ב-32 ₪
-        </div>
-    </header>
+  <header>
+    <h1 id="site-title">סבוני גוף טבעיים</h1>
+    <p id="site-subtitle">טוען כותרת...</p>
+  </header>
 
-        <div class="products-grid" id="products-grid">
-            <!-- נטען דינמית -->
-        </div>
-    </div>
+  <main class="catalog-grid" id="catalog-container">
+    <!-- הסבונים ייטענו לכאן באופן דינמי -->
+  </main>
 
-    <footer>
-        <h2>רוצים להתפנק או להזמין מתנה?</h2>
-        <p>להזמנות ופרטים נוספים:</p>
-        <p>📞 תהילה: <a href="tel:0584020823">058-4020823</a> | יובל: <a href="tel:0509606144">050-9606144</a></p>
-    </footer>
+  <script>
+    // טעינת כותרות האתר
+    fetch('/content/settings.json')
+      .then(res => res.json())
+      .then(settings => {
+        if (settings.site_title) document.getElementById('site-title').innerText = settings.site_title;
+        if (settings.site_subtitle) document.getElementById('site-subtitle').innerText = settings.site_subtitle;
+      })
+      .catch(err => console.log('Settings load error:', err));
 
-    <script>
-        async function loadSoaps() {
-            try {
-                const response = await fetch('soaps.json');
-                const data = await response.json();
-                const container = document.getElementById('products-grid');
-                container.innerHTML = '';
+    // טעינת קטלוג הסבונים
+    fetch('/soaps.json')
+      .then(res => res.json())
+      .then(soaps => {
+        const container = document.getElementById('catalog-container');
+        container.innerHTML = '';
 
-                data.soaps.forEach(soap => {
-                    const benefitsHtml = soap.benefits.map(b => `<li>${b}</li>`).join('');
-                    const card = `
-                        <div class="product-card" data-category="${soap.category}">
-                            <img src="${soap.image}" alt="${soap.title}" class="product-image">
-                            <div class="product-content">
-                                <h2 class="product-title">${soap.title}</h2>
-                                <div class="product-tagline">${soap.tagline}</div>
-                                
-                                <div class="section-title">רכיבים</div>
-                                <div class="ingredients-list">${soap.ingredients}</div>
+        soaps.forEach((soap, index) => {
+          const soapId = soap.id || `soap-${index + 1}`;
+          const card = document.createElement('a');
+          card.className = 'product-card';
+          card.href = `/product.html?id=${encodeURIComponent(soapId)}`;
 
-                                <div class="section-title">סגולות ותכונות</div>
-                                <ul class="benefits-list">${benefitsHtml}</ul>
-
-                                <div class="suitable-for">
-                                    ✨ <strong>למי מתאים?</strong> ${soap.suitable_for}
-                                </div>
-
-                                <a href="${soap.whatsapp_link}" class="order-btn" target="_blank">להזמנה ב-WhatsApp</a>
-                            </div>
-                        </div>
-                    `;
-                    container.innerHTML += card;
-                });
-            } catch (error) {
-                console.error("שגיאה בטעינת הנתונים:", error);
-            }
-        }
-
-        function filterSoaps(category) {
-            const cards = document.querySelectorAll('.product-card');
-            const buttons = document.querySelectorAll('.filter-btn');
-
-            buttons.forEach(btn => btn.classList.remove('active'));
-            if (event && event.target) {
-                event.target.classList.add('active');
-            }
-
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category.includes(category)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        loadSoaps();
-    </script>
+          card.innerHTML = `
+            <img class="product-image" src="${soap.image || '/images/default.jpg'}" alt="${soap.name}">
+            <div class="product-info">
+              <h2 class="product-title">${soap.name}</h2>
+              <p class="product-subtitle">${soap.subtitle || ''}</p>
+              ${soap.price ? `<div class="product-price">₪${soap.price}</div>` : ''}
+              <div class="view-btn">לפרטים מלאים והזמנה</div>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch(err => {
+        console.error('Error loading soaps:', err);
+      });
+  </script>
 </body>
 </html>
