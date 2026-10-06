@@ -12,10 +12,13 @@
 
   <style>
     :root {
-      --primary: #5c6f52;
-      --bg: #f9f7f2;
-      --text: #2c3529;
+      --primary: #b37554;
+      --primary-hover: #8c5332;
+      --bg: #fcf9f4;
+      --text: #2b221e;
       --card-bg: #ffffff;
+      --footer-bg: #f3ece1;
+      --footer-border: #e2d3c1;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -49,7 +52,7 @@
     .back-link {
       display: inline-block;
       margin: 20px;
-      color: var(--primary);
+      color: var(--primary-hover);
       text-decoration: none;
       font-weight: 600;
     }
@@ -71,10 +74,10 @@
     .product-details {
       flex: 1 1 400px;
     }
-    h1 { font-size: 2.2rem; color: var(--primary); margin-bottom: 5px; }
-    .subtitle { font-size: 1.1rem; color: #666; margin-bottom: 15px; }
-    .price { font-size: 1.5rem; font-weight: bold; color: var(--primary); margin-bottom: 20px; }
-    .section-title { font-weight: bold; font-size: 1.2rem; margin-top: 20px; margin-bottom: 8px; border-bottom: 2px solid var(--bg); padding-bottom: 4px; }
+    h1 { font-size: 2.2rem; color: var(--primary-hover); margin-bottom: 5px; }
+    .subtitle { font-size: 1.1rem; color: #66574e; margin-bottom: 15px; }
+    .price { font-size: 1.5rem; font-weight: bold; color: var(--primary-hover); margin-bottom: 20px; }
+    .section-title { font-weight: bold; font-size: 1.2rem; margin-top: 20px; margin-bottom: 8px; border-bottom: 2px solid var(--bg); padding-bottom: 4px; color: var(--primary-hover); }
     ul { list-style-type: square; padding-right: 20px; }
     li { margin-bottom: 8px; }
     .whatsapp-btn {
@@ -94,8 +97,8 @@
 
     /* עיצוב הפוטר בתחתית */
     footer {
-      background-color: #eef2e8;
-      border-top: 1px solid #dbe3d3;
+      background-color: var(--footer-bg);
+      border-top: 1px solid var(--footer-border);
       padding: 20px;
       text-align: center;
       margin-top: 40px;
@@ -108,7 +111,7 @@
       font-weight: 500;
     }
     footer a {
-      color: var(--primary);
+      color: var(--primary-hover);
       text-decoration: none;
       font-weight: bold;
     }
