@@ -21,14 +21,13 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
-      font-family: 'Rubik', system-ui, -apple-system, sans-serif; /* גופן כללי לכל האתר */
+      font-family: 'Rubik', system-ui, -apple-system, sans-serif;
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
       padding: 20px;
     }
 
-    /* הגדרת גופן פרנק רול לכותרות */
     h1, h2, h3, h4, .product-title {
       font-family: 'Frank Ruhl Libre', serif;
     }
@@ -58,9 +57,9 @@
     .product-card {
       background: var(--card-bg);
       border-radius: 12px;
-      overflow: hidden;
+      overflow: hidden; /* שומר שהתמונה המוגדלת לא תגלוש מחוץ לפינות המעוגלות */
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       text-decoration: none;
       color: inherit;
       display: flex;
@@ -70,17 +69,30 @@
       transform: translateY(-5px);
       box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     }
+
+    /* עיצוב התמונה ואפקט ההגדלה */
     .product-image {
       width: 100%;
       height: 240px;
       object-fit: cover;
+      object-position: center;
+      display: block;
+      margin: 0 auto;
       background-color: #eee;
+      transition: transform 0.4s ease; /* מעבר חלק של 0.4 שניות להגדלה */
     }
+
+    /* הגדלה עדין של התמונה כשהעכבר נמצא על כרטיסיית המוצר */
+    .product-card:hover .product-image {
+      transform: scale(1.06); /* הגדלה עדינות של 6% בלבד */
+    }
+
     .product-info {
       padding: 20px;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
+      text-align: center;
     }
     .product-title {
       font-size: 1.5rem;
@@ -106,6 +118,10 @@
       padding: 10px;
       border-radius: 6px;
       font-weight: 500;
+      transition: background-color 0.2s;
+    }
+    .product-card:hover .view-btn {
+      background-color: #4a5a41; /* הכהיית הכפתור בלחיצה/מעבר עכבר */
     }
   </style>
 </head>
@@ -121,7 +137,6 @@
   </main>
 
   <script>
-    // טעינת כותרות האתר בבטחה
     fetch('/content/settings.json')
       .then(res => res.ok ? res.json() : null)
       .then(settings => {
@@ -136,7 +151,6 @@
         document.getElementById('site-subtitle').innerText = 'סבונים טבעיים בעבודת יד מרכיבים איכותיים';
       });
 
-    // פונקציית עזר לטיפול בנתיבי תמונות עם עברית ורווחים
     function formatImagePath(imgPath) {
       if (!imgPath) return '/images/default.jpg';
       if (imgPath.startsWith('http://') || imgPath.startsWith('https://')) return imgPath;
@@ -148,7 +162,6 @@
       return '/' + cleanPath.split('/').map(segment => encodeURIComponent(segment)).join('/');
     }
 
-    // טעינת קטלוג הסבונים
     fetch('/soaps.json')
       .then(res => {
         if (!res.ok) throw new Error('soaps.json not found');
