@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>סבונים טבעיים | קטלוג מוצרים</title>
+  <title>סבוני גוף טבעיים | קטלוג מוצרים</title>
 
   <!-- טעינת גופני Google Fonts: Frank Ruhl Libre + Rubik -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,11 +12,15 @@
 
   <style>
     :root {
-      --primary: #5c6f52;
-      --bg: #f9f7f2;
-      --text: #2c3529;
+      --primary: #b37554;
+      --primary-hover: #8c5332;
+      --bg: #fcf9f4;
+      --text: #2b221e;
       --card-bg: #ffffff;
-      --accent: #8b9d77;
+      --accent: #d8a07c;
+      --banner-bg: #f2e5d8;
+      --footer-bg: #f3ece1;
+      --footer-border: #e2d3c1;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
@@ -48,7 +52,7 @@
     }
     header p {
       font-size: 1.15rem;
-      color: #666;
+      color: #615249;
       margin-bottom: 6px;
     }
 
@@ -57,8 +61,8 @@
       display: inline-block;
       margin-top: 10px;
       padding: 6px 18px;
-      background-color: #e8efe0;
-      color: var(--primary);
+      background-color: var(--banner-bg);
+      color: var(--primary-hover);
       font-weight: 600;
       font-size: 1.1rem;
       border-radius: 20px;
@@ -116,19 +120,19 @@
     }
     .product-title {
       font-size: 1.5rem;
-      color: var(--primary);
+      color: var(--primary-hover);
       margin-bottom: 8px;
     }
     .product-subtitle {
       font-size: 0.95rem;
-      color: #555;
+      color: #66574e;
       margin-bottom: 15px;
       flex-grow: 1;
     }
     .product-price {
       font-weight: bold;
       font-size: 1.2rem;
-      color: var(--primary);
+      color: var(--primary-hover);
       margin-bottom: 12px;
     }
     .view-btn {
@@ -141,13 +145,13 @@
       transition: background-color 0.2s;
     }
     .product-card:hover .view-btn {
-      background-color: #4a5a41;
+      background-color: var(--primary-hover);
     }
 
     /* עיצוב הפוטר בתחתית */
     footer {
-      background-color: #eef2e8;
-      border-top: 1px solid #dbe3d3;
+      background-color: var(--footer-bg);
+      border-top: 1px solid var(--footer-border);
       padding: 20px;
       text-align: center;
       margin-top: 40px;
@@ -160,7 +164,7 @@
       font-weight: 500;
     }
     footer a {
-      color: var(--primary);
+      color: var(--primary-hover);
       text-decoration: none;
       font-weight: bold;
     }
@@ -198,7 +202,6 @@
           document.getElementById('site-subtitle').innerText = 'סבונים איכותיים משמנים טבעיים עם שמנים אתריים שונים, למי שרוצה להתפנק או לפנק';
         }
         
-        // שליפת מחיר/תגית השקה מהגדרות במידה וקיים שדה launch_price
         if (settings && (settings.launch_price || settings.promo_text)) {
           document.getElementById('site-promo').innerText = settings.launch_price || settings.promo_text;
         }
