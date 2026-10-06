@@ -1,40 +1,39 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: tehilachz-netizen/soup_store
   branch: main
 
 media_folder: "images"
 public_folder: "/images"
 
 collections:
-  - name: "soaps"
+  - name: "soaps_collection"
     label: "סבונים"
-    file: "soaps.json"
-    type: "json"
-    description: "ניהול רשימת הסבונים בקטלוג"
-    fields:
-      - name: "soaps"
-        label: "רשימת סבונים"
-        widget: "list"
-        summary: "{{fields.title}}"
-        field:
-          type: "object"
-          fields:
-            - { label: "מזהה ייחודי (באנגלית)", name: "id", widget: "string" }
-            - { label: "שם הסבון", name: "title", widget: "string" }
-            - { label: "תאור קצר (סלוגן)", name: "tagline", widget: "string" }
-            - { label: "תמונה", name: "image", widget: "image" }
-            - { label: "למי מתאים?", name: "suitable_for", widget: "string", required: false }
-            - { label: "רכיבים", name: "ingredients", widget: "text" }
-            - { label: "סגולות ותכונות", name: "benefits", widget: "list", field: { label: "תכונה", name: "feature", widget: "string" } }
-            - { label: "קישור להזמנה בווטסאפ", name: "whatsapp_link", widget: "string", required: false }
+    files:
+      - label: "קטלוג סבונים"
+        name: "soaps_file"
+        file: "soaps.json"
+        fields:
+          - name: "soaps"
+            label: "רשימת סבונים"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "מזהה ייחודי (באנגלית)", name: "id", widget: "string" }
+              - { label: "שם הסבון", name: "title", widget: "string" }
+              - { label: "תיאור קצר (סלוגן)", name: "tagline", widget: "string" }
+              - { label: "תמונה", name: "image", widget: "image" }
+              - { label: "למי מתאים?", name: "suitable_for", widget: "string", required: false }
+              - { label: "רכיבים", name: "ingredients", widget: "text" }
+              - { label: "סגולות ותכונות", name: "benefits", widget: "list", field: { label: "תכונה", name: "feature", widget: "string" } }
+              - { label: "קישור להזמנה בווטסאפ", name: "whatsapp_link", widget: "string", required: false }
 
-  - name: "settings"
+  - name: "settings_collection"
     label: "הגדרות האתר"
     files:
       - label: "כותרות האתר"
-        name: "general"
+        name: "general_settings"
         file: "content/settings.json"
         fields:
           - { label: "כותרת ראשית", name: "site_title", widget: "string" }
           - { label: "כותרת משנה", name: "site_subtitle", widget: "string" }
-
