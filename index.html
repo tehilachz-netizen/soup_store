@@ -62,7 +62,7 @@
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
       margin-top: 12px;
       padding: 8px 24px;
       background-color: var(--banner-bg);
@@ -72,9 +72,16 @@
       border-radius: 25px;
       border: 1px solid var(--accent);
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      direction: rtl;
     }
 
-    /* עיצוב הקו המחוק מעל המחיר הרגיל */
+    .price-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* עיצוב הקו המחוק מעל המחירים המקוריים */
     .strikethrough-price {
       text-decoration: line-through;
       text-decoration-color: var(--primary-hover);
@@ -82,12 +89,18 @@
       color: #8c7161;
       font-weight: 500;
       font-size: 1.05rem;
-      margin: 0 2px;
+      margin-left: 4px;
     }
 
     .sale-highlight {
       font-weight: 700;
       color: var(--primary-hover);
+    }
+
+    .separator {
+      margin: 0 4px;
+      color: var(--accent);
+      font-weight: bold;
     }
 
     main {
@@ -233,21 +246,33 @@
         if (settings && settings.show_launch_banner !== false) {
           promoContainer.style.display = 'inline-flex';
 
-          let html = '';
+          let html = `<span>מחיר השקה:</span>`;
+
+          // חלק 1: ליחידה (מחיר מבצע + מחיר מבוטל אם קיים)
+          const unitSale = settings.unit_sale_price || '₪18';
+          const unitOrig = settings.unit_original_price || '';
           
-          // מחיר מבצע/השקה
-          if (settings.launch_price) {
-            html += `<span>${settings.launch_price}</span>`;
-          }
+          html += `
+            <span class="price-group">
+              <span>ליחידה</span>
+              <span class="sale-highlight">${unitSale}</span>
+              ${unitOrig ? `<span class="strikethrough-price">${unitOrig}</span>` : ''}
+            </span>
+          `;
 
-          // מחיר רגיל (נמחק בקו)
-          if (settings.original_price) {
-            html += `<span class="strikethrough-price">${settings.original_price}</span>`;
-          }
+          // חלק 2: לזוג (מחיר מבצע + מחיר מבוטל אם קיים)
+          const pairSale = settings.pair_sale_price || '';
+          const pairOrig = settings.pair_original_price || '';
 
-          // מחיר לזוג או טקסט נוסף
-          if (settings.pair_price) {
-            html += `<span>${settings.pair_price}</span>`;
+          if (pairSale || pairOrig) {
+            html += `<span class="separator">|</span>`;
+            html += `
+              <span class="price-group">
+                <span>זוג</span>
+                ${pairSale ? `<span class="sale-highlight">${pairSale}</span>` : ''}
+                ${pairOrig ? `<span class="strikethrough-price">${pairOrig}</span>` : ''}
+              </span>
+            `;
           }
 
           promoContainer.innerHTML = html;
