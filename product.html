@@ -150,3 +150,70 @@
       }
       return '/' + cleanPath.split('/').map(segment => encodeURIComponent(segment)).join('/');
     }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const soapId = urlParams.get('id');
+
+    fetch('/soaps.json')
+      .then(res => res.json())
+      .then(data => {
+        const soaps = Array.isArray(data) ? data : (data.soaps || []);
+        
+        const soap = soaps.find((item, idx) => item.id === soapId || `soap-${idx + 1}` === soapId) || soaps[0];
+
+        if (!soap) {
+          document.getElementById('product-content').innerHTML = '<p>סבון לא נמצא.</p>';
+          return;
+        }
+
+        const title = soap.title || soap.name;
+        const tagline = soap.tagline || soap.subtitle || '';
+        const image = formatImagePath(soap.image);
+        const benefits = soap.benefits || soap.features || [];
+
+        document.getElementById('page-title').innerText = `${title} | סבון טבעי`;
+
+        let benefitsHtml = '';
+        if (benefits.length) {
+          benefitsHtml = `
+            <div class="section-title">סגולות ותכונות:</div>
+            <ul>
+              ${benefits.map(b => `<li>${typeof b === 'object' ? (b.feature || Object.values(b)[0]) : b}</li>`).join('')}
+            </ul>
+          `;
+        }
+
+        document.getElementById('product-content').innerHTML = `
+          <div class="product-media">
+            <img src="${image}" alt="${title}" onerror="this.src='/images/default.jpg'">
+          </div>
+          <div class="product-details">
+            <h1>${title}</h1>
+            <div class="subtitle">${tagline}</div>
+            ${soap.price ? `<div class="price">₪${soap.price}</div>` : ''}
+
+            ${soap.suitable_for ? `
+              <div class="section-title">למי זה מתאים?</div>
+              <p>${soap.suitable_for}</p>
+            ` : ''}
+
+            ${soap.ingredients ? `
+              <div class="section-title">רכיבים:</div>
+              <p>${soap.ingredients}</p>
+            ` : ''}
+
+            ${benefitsHtml}
+
+            ${soap.whatsapp_link ? `
+              <a href="${soap.whatsapp_link}" target="_blank" class="whatsapp-btn">להזמנה בווטסאפ</a>
+            ` : ''}
+          </div>
+        `;
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('product-content').innerHTML = '<p>שגיאה בטעינת הפרטים.</p>';
+      });
+  </script>
+</body>
+</html>
