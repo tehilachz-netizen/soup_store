@@ -2,7 +2,7 @@ backend:
   name: github
   repo: tehilachz-netizen/soup_store
   branch: main
-  base_url: https://soupstore.vercel.app
+  base_url: https://soapstore.vercel.app
   auth_endpoint: api/auth
 
 media_folder: "images"
